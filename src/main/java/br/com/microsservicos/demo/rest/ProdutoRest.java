@@ -34,4 +34,9 @@ public class ProdutoRest {
     public Produto update(@RequestBody Produto produto, @PathVariable("id") Long id){
         return produtoService.update(produto, id);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id){
+        produtoRepository.deleteById(id);
+    }
 }
