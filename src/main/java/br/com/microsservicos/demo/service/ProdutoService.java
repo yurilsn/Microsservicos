@@ -2,12 +2,9 @@ package br.com.microsservicos.demo.service;
 
 import br.com.microsservicos.demo.domain.Produto;
 import br.com.microsservicos.demo.repository.ProdutoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.InputMismatchException;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
