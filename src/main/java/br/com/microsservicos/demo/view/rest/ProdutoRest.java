@@ -34,11 +34,18 @@ public class ProdutoRest {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ProdutoResponse>> readById(@PathVariable("id") Long id){
-        Optional<ProdutoDTO> dto = produtoService.findById(id);
 
-        ProdutoResponse response = new ModelMapper().map(dto.get(), ProdutoResponse.class);
 
-        return new ResponseEntity<>(Optional.of(response), HttpStatus.OK);
+        try {
+
+            Optional<ProdutoDTO> dto = produtoService.findById(id);
+            ProdutoResponse response = new ModelMapper().map(dto.get(), ProdutoResponse.class);
+            return new ResponseEntity<>(Optional.of(response), HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
     }
 
     @PostMapping
