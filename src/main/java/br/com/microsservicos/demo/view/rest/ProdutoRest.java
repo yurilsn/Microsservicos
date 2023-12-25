@@ -33,8 +33,12 @@ public class ProdutoRest {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public Optional<Produto> readById(@PathVariable("id") Long id){
-        return produtoRepository.findById(id);
+    public ResponseEntity<Optional<ProdutoResponse>> readById(@PathVariable("id") Long id){
+        Optional<ProdutoDTO> dto = produtoService.findById(id);
+
+        ProdutoResponse response = new ModelMapper().map(dto.get(), ProdutoResponse.class);
+
+        return new ResponseEntity<>(Optional.of(response), HttpStatus.OK);
     }
 
     @PostMapping
