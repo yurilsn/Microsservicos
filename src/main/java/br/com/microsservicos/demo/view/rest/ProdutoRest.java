@@ -4,6 +4,7 @@ import br.com.microsservicos.demo.domain.Produto;
 import br.com.microsservicos.demo.repository.ProdutoRepository;
 import br.com.microsservicos.demo.service.ProdutoService;
 import br.com.microsservicos.demo.shared.ProdutoDTO;
+import br.com.microsservicos.demo.view.domain.ProdutoRequest;
 import br.com.microsservicos.demo.view.domain.ProdutoResponse;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -38,8 +39,8 @@ public class ProdutoRest {
 
         try {
 
-            Optional<ProdutoDTO> dto = produtoService.findById(id);
-            ProdutoResponse response = new ModelMapper().map(dto.get(), ProdutoResponse.class);
+            Optional<ProdutoDTO> produtoDTO = produtoService.findById(id);
+            ProdutoResponse response = new ModelMapper().map(produtoDTO.get(), ProdutoResponse.class);
             return new ResponseEntity<>(Optional.of(response), HttpStatus.OK);
 
         } catch (Exception ex) {
@@ -49,17 +50,27 @@ public class ProdutoRest {
     }
 
     @PostMapping
-    public Produto create(@RequestBody Produto produto){
-        return produtoRepository.save(produto);
+    public ResponseEntity<ProdutoResponse> create(@RequestBody ProdutoRequest produtoRequest){
+        ModelMapper mapper = new ModelMapper();
+        ProdutoDTO produtoDTO = produtoService.save(mapper.map(produtoRequest, ProdutoDTO.class));
+        
+        return new ResponseEntity<>(mapper.map(produtoDTO, ProdutoResponse.class), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public Produto update(@RequestBody Produto produto, @PathVariable("id") Long id){
-        return produtoService.update(produto, id);
+    public ResponseEntity<ProdutoResponse> update(@RequestBody ProdutoRequest produtoRequest, @PathVariable("id") Long id){
+        ModelMapper mapper = new ModelMapper();
+        ProdutoDTO produtoDTO = produtoService.update(mapper.map(produtoRequest, ProdutoDTO.class), id);
+
+        return new ResponseEntity<>(
+                mapper.map(produtoDTO, ProdutoResponse.class),
+                HttpStatus.OK
+        );
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id){
-        produtoRepository.deleteById(id);
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+        produtoService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
