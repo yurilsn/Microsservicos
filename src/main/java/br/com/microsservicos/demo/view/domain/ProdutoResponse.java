@@ -16,6 +16,5 @@ public class ProdutoResponse {
 
     private Double valor;
 
-//    private String observacao;
 
 }

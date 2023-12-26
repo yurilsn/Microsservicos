@@ -9,6 +9,7 @@ import lombok.Setter;
 public class ProdutoDTO {
 
     private Long id;
+
     private String nome;
 
     private Integer quantidade;

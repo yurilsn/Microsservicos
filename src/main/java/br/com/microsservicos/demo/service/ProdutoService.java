@@ -40,7 +40,7 @@ public class ProdutoService {
 
         Produto produto = produtoRepository.save(mapper.map(produtoDTO, Produto.class));
 
-        produtoDTO.setId(produto.getId());
+//        produtoDTO.setId(produto.getId());
 
         return produtoDTO;
     }

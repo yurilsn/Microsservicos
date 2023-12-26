@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/Produto")
 @AllArgsConstructor
 public class ProdutoRest {
-    private ProdutoRepository produtoRepository;
     private ProdutoService produtoService;
 
     @GetMapping
