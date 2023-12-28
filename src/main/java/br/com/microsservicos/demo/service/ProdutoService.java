@@ -46,25 +46,11 @@ public class ProdutoService {
     }
 
     public ProdutoDTO update(ProdutoDTO produtoDTOAtualizado, Long id){
-//        return produtoRepository.findById(id).map(produto -> {
-//            produto.setNome(produtoDTOAtualizado.getNome());
-//            produto.setQuantidade(produtoDTOAtualizado.getQuantidade());
-//            produto.setValor(produtoDTOAtualizado.getValor());
-//            produto.setObservacao(produtoDTOAtualizado.getObservacao());
-//            return produtoRepository.save(produto);
-//        }).orElseGet(() -> {return produtoRepository.save(produtoDTOAtualizado);});
 
-
-//        produtoDTOAtualizado.setId(id);
-//        return produtoRepository.save(produtoDTOAtualizado);
         produtoDTOAtualizado.setId(id);
-
         ModelMapper mapper = new ModelMapper();
-
         Produto produto = mapper.map(produtoDTOAtualizado, Produto.class);
-
         produtoRepository.save(produto);
-
         return produtoDTOAtualizado;
     }
 
